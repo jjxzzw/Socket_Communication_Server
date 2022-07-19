@@ -12,12 +12,14 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**n
- * 服务器监听9999端口
+/**
+ * 服务器的信息交互端,用户信息存储
  */
 public class QQServer {
+    //用户信息集合
     private static ConcurrentHashMap<String,User> hashMap = new ConcurrentHashMap<>();
     private ServerSocket serverSocket = null;
+    //添加用户信息
     static {
         hashMap.put("110",new User("110","123456"));
         hashMap.put("120",new User("120","123456"));
@@ -27,6 +29,12 @@ public class QQServer {
         hashMap.put("高达",new User("高达","123456"));
     }
 
+    /**
+     * 检测用户名密码
+     * @param userId 用户名
+     * @param pwd 密码
+     * @return T/F
+     */
     public boolean checkUser(String userId,String pwd){
         User user = hashMap.get(userId);
         if (user == null){
@@ -35,6 +43,10 @@ public class QQServer {
         return user.getPasswd().equals(pwd);
     }
 
+
+    /**
+     * 登陆功能的服务器端,登录成功将开启对应线程对用户进行监听
+     */
     public QQServer() {
         //端口信息可以在配置文件中记录
         try {
