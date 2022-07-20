@@ -43,6 +43,9 @@ public class QQServer {
         return user.getPasswd().equals(pwd);
     }
 
+    public static ConcurrentHashMap<String, User> getHashMap() {
+        return hashMap;
+    }
 
     /**
      * 登陆功能的服务器端,登录成功将开启对应线程对用户进行监听
@@ -51,6 +54,8 @@ public class QQServer {
         //端口信息可以在配置文件中记录
         try {
             System.out.println("在9999端口监听");
+
+            new Thread(new SendNewsToAllService()).start();
             serverSocket = new ServerSocket(9999);
 
             while (true) {//在与某个客户端连接后,依然可以持续监听
@@ -79,6 +84,7 @@ public class QQServer {
                     System.out.println("用户:"+user.getUserId()+"密码:"+user.getPasswd()+"服务器登录失败");
                     message.setMesType(MessageType.MESSAGE_LOGIN_FAIL);
                     oos.writeObject(message);
+                    socket.close();
                 }
             }
         } catch (Exception e) {

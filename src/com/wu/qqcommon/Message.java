@@ -8,6 +8,7 @@ public class Message implements Serializable {
     private String content;//内容
     private String sendTime;//发送时间
     private String mesType;//信息类型
+    private FileMessage fileMessage;//文件信息
 
     private static final long serialVersionUID = 1L;
 
@@ -49,5 +50,13 @@ public class Message implements Serializable {
 
     public void setMesType(String mesType) {
         this.mesType = mesType;
+    }
+
+    public FileMessage getFileMessage() {
+        return fileMessage;
+    }
+
+    public void setFileMessage(FileMessage fileMessage) {
+        this.fileMessage = fileMessage;
     }
 }
